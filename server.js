@@ -1,0 +1,27 @@
+require("dotenv").config();
+const express = require("express");
+const cors = require("cors");
+const path = require("path");
+
+const geminiRoutes = require("./routes/gemini");
+const weatherRoutes = require("./routes/weather");
+
+const app = express();
+const PORT = process.env.PORT || 3000;
+
+app.use(cors());
+app.use(express.json());
+app.use(express.static(path.join(__dirname, "public")));
+
+// Routes
+app.use("/api/gemini", geminiRoutes);
+app.use("/api/weather", weatherRoutes);
+
+// Serve frontend
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "index.html"));
+});
+
+app.listen(PORT, () => {
+  console.log(`🌾 Arvis server running on http://localhost:${PORT}`);
+});

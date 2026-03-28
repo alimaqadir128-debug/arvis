@@ -1,0 +1,257 @@
+/* =============================================
+   ARVIS — CREAM + SAGE THEME
+   Link this AFTER style.css in your <head>:
+   <link rel="stylesheet" href="theme.css"/>
+   ============================================= */
+
+:root {
+  --bg: #faf6f0;
+  --surface: #f2ebe0;
+  --surface2: #e8dfd0;
+  --border: #d8cfc0;
+  --border-bright: #c0b5a0;
+
+  --green: #5a8060;
+  --green-bright: #3a6040;
+  --green-dim: #ddeedd;
+
+  --amber: #c07850;
+  --amber-dim: #f5e8d8;
+
+  --red: #c06858;
+
+  --blue: #607898;
+  --blue-dim: #dce8f0;
+
+  --text: #4a4038;
+  --text-dim: #8a7a68;
+  --text-bright: #1e1a14;
+
+  --mono: 'DM Mono', monospace;
+  --serif: 'Cormorant Garamond', serif;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+}
+
+body::before { opacity: 0.15; }
+
+/* HEADER */
+header {
+  background: var(--bg);
+  border-bottom-color: var(--border);
+}
+
+.logo-main { color: var(--green) !important; }
+.logo-title { color: var(--text-bright); }
+.logo-sub { color: var(--text-dim); }
+
+select#districtSelect {
+  background: var(--surface);
+  border-color: var(--border-bright);
+  color: var(--text-bright);
+}
+select#districtSelect:focus { border-color: var(--green); }
+
+.district-label { color: var(--text-dim); }
+
+.weather-widget { color: var(--text-dim); }
+.weather-temp { color: var(--text-bright) !important; font-size: 13px; }
+.weather-desc { color: var(--text-dim); }
+
+/* HERO */
+.hero { border-bottom-color: var(--border); }
+.hero h1 { color: var(--text-bright); }
+.hero h1 em { color: var(--green) !important; }
+.hero p { color: var(--text-dim); }
+
+.agent-badge {
+  border-color: var(--border-bright);
+  color: var(--text-dim);
+}
+
+.section-label { color: var(--text-dim); }
+
+/* SECTIONS */
+.crop-section,
+.analysis-section,
+.query-section {
+  border-bottom-color: var(--border);
+}
+
+/* CROP BUTTONS */
+.crop-btn {
+  background: var(--surface);
+  border-color: var(--border);
+  color: var(--text-dim);
+}
+.crop-btn:hover {
+  border-color: var(--green);
+  background: var(--green-dim);
+  color: var(--text-bright);
+  transform: none;
+  box-shadow: none;
+}
+.crop-btn.active {
+  border-color: var(--green);
+  background: var(--green-dim);
+  color: var(--green-bright);
+  box-shadow: none;
+}
+.crop-btn.active .crop-name { color: var(--green-bright); }
+.crop-name { color: var(--text); font-weight: 400; }
+.crop-price { color: var(--blue) !important; }
+
+/* ANALYSIS BUTTONS */
+.analysis-btn {
+  background: var(--surface);
+  border-color: var(--border);
+  color: var(--text-dim);
+  border-radius: 4px;
+}
+.analysis-btn:hover {
+  border-color: var(--border-bright);
+  color: var(--text-bright);
+  background: var(--surface2);
+}
+.analysis-btn.active {
+  background: var(--green-dim);
+  border-color: var(--green);
+  color: var(--green-bright);
+}
+
+/* TEXTAREA */
+textarea,
+textarea#queryInput {
+  background: var(--surface);
+  border-color: var(--border);
+  color: var(--text-bright);
+}
+textarea:focus,
+textarea#queryInput:focus { border-color: var(--green); }
+textarea::placeholder,
+textarea#queryInput::placeholder { color: var(--text-dim); }
+
+/* BUTTON */
+.ask-btn {
+  background: var(--green) !important;
+  color: #fff !important;
+  box-shadow: none !important;
+  transform: none !important;
+  border-radius: 4px;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.2em;
+}
+.ask-btn:hover {
+  background: var(--green-bright) !important;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+/* PIPELINE */
+.pipeline-section { border-bottom-color: var(--border); }
+.pipeline-step { border-bottom-color: var(--border); }
+
+.step-indicator {
+  border-color: var(--border-bright);
+  color: var(--text-dim);
+}
+.pipeline-step.active .step-indicator {
+  border-color: var(--green);
+  color: var(--green);
+}
+.pipeline-step.done .step-indicator {
+  border-color: var(--green);
+  background: var(--green-dim);
+  color: var(--green-bright);
+}
+.pipeline-step.active .step-name,
+.pipeline-step.done .step-name { color: var(--green); }
+.step-name { color: var(--text-dim); }
+.step-desc { color: var(--text-dim); }
+.pipeline-step.done .step-desc { color: var(--text); }
+
+.step-status.pending { color: var(--text-dim); }
+.step-status.running { color: var(--amber); }
+.step-status.done    { color: var(--green); }
+
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(90,128,96,0.35); }
+  50%       { box-shadow: 0 0 0 6px rgba(90,128,96,0); }
+}
+
+/* RESULT */
+.result-label { color: var(--text-dim); }
+
+.confidence-high { border-color: var(--green);  color: var(--green); }
+.confidence-med  { border-color: var(--amber);  color: var(--amber); }
+.confidence-low  { border-color: var(--red);    color: var(--red); }
+
+.guardrail-ok   { background: var(--green-dim); color: var(--green-bright); }
+.guardrail-fail { background: #f5ddd8; color: var(--red); }
+
+.result-body {
+  background: var(--surface);
+  border-color: var(--border);
+  border-left: 3px solid var(--green);
+  color: var(--text-bright);
+}
+
+.risk-flag {
+  border-color: #c09878;
+  color: var(--amber);
+  background: var(--amber-dim);
+}
+
+/* FINANCIAL */
+.financial-panel {
+  background: var(--surface);
+  border-color: var(--border);
+}
+.financial-header {
+  color: var(--blue) !important;
+  border-bottom-color: var(--border) !important;
+}
+.financial-cell {
+  border-bottom-color: var(--border);
+  border-right-color: var(--border);
+}
+.fin-label { color: var(--text-dim); }
+.fin-value { color: var(--text-bright) !important; }
+
+/* AUDIT */
+.audit-toggle {
+  background: none;
+  border-color: var(--border);
+  color: var(--text-dim);
+}
+.audit-toggle:hover {
+  border-color: var(--border-bright);
+  color: var(--text-bright);
+}
+
+.audit-card {
+  background: var(--surface2);
+  border-color: var(--border);
+}
+.audit-card-header { border-bottom-color: var(--border); }
+.audit-agent-name  { color: var(--green) !important; }
+.audit-agent-role  { color: var(--text-dim); }
+.audit-card-body   { color: var(--text-dim); }
+.audit-key         { color: var(--green) !important; }
+.audit-val         { color: var(--text-bright); }
+.audit-list-item::before { color: var(--text-dim); }
+
+/* FOOTER */
+footer {
+  border-top-color: var(--border);
+  color: var(--text-dim);
+}
+footer em { color: var(--green); }
+
+/* DECORATIVE CIRCLES — tint to sage */
+.c1 { border-color: rgba(90,128,96,0.15) !important; }
+.c2 { border-color: rgba(90,128,96,0.1) !important; }

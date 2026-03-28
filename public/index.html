@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Arvis — Agricultural Intelligence System</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet"/>
+  <style>
+    /* ========== DARK + PASTEL THEME ========== */
+    :root {
+      --bg-dark: #0A0F1A;
+      --bg-card: #141B2B;
+      --bg-elevated: #1E2738;
+      --pastel-saffron: #FFB347;
+      --pastel-green: #A8E6CF;
+      --pastel-peach: #FFDAB9;
+      --pastel-lavender: #C5E0F4;
+      --pastel-mint: #B8F2E2;
+      --text-primary: #FFFFFF;
+      --text-secondary: #B8C5D6;
+      --border: rgba(255,255,255,0.1);
+      --glow: rgba(255,179,71,0.3);
+      --mono: 'DM Mono', monospace;
+      --serif: 'Cormorant Garamond', serif;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg-dark);
+      color: var(--text-primary);
+      font-family: var(--serif);
+      min-height: 100vh;
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(circle at 20% 50%, rgba(255,179,71,0.08) 0%, transparent 50%),
+                  radial-gradient(circle at 80% 80%, rgba(168,230,207,0.05) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .wrap { max-width: 900px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
+
+    header {
+      padding: 32px 0 24px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .logo-main { font-family: var(--mono); font-size: 11px; letter-spacing: 0.4em; color: var(--pastel-saffron); display: block; margin-bottom: 4px; }
+    .logo-title { font-size: 28px; font-weight: 300; background: linear-gradient(135deg, #FFB347 0%, #A8E6CF 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .logo-sub { font-family: var(--mono); font-size: 10px; color: var(--text-secondary); letter-spacing: 0.15em; margin-top: 2px; display: block; }
+
+    .context-bar { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+    .district-select-wrap { display: flex; align-items: center; gap: 8px; }
+    .district-label { font-family: var(--mono); font-size: 10px; color: var(--text-secondary); letter-spacing: 0.15em; }
+
+    select#districtSelect {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--text-primary);
+      font-family: var(--mono);
+      font-size: 11px;
+      padding: 6px 10px;
+      border-radius: 8px;
+      cursor: pointer;
+      outline: none;
+      transition: all 0.3s;
+    }
+    select#districtSelect:hover { border-color: var(--pastel-saffron); }
+    select#districtSelect:focus { border-color: var(--pastel-saffron); box-shadow: 0 0 10px var(--glow); }
+
+    .weather-widget { font-family: var(--mono); font-size: 11px; color: var(--text-secondary); display: flex; align-items: center; gap: 10px; background: var(--bg-card); padding: 6px 12px; border-radius: 20px; border: 1px solid var(--border); }
+    .weather-temp { color: var(--pastel-saffron); font-size: 13px; font-weight: bold; }
+
+    .hero { padding: 48px 0 40px; border-bottom: 1px solid var(--border); }
+    .hero h1 { font-size: clamp(32px, 5vw, 52px); font-weight: 300; line-height: 1.2; color: var(--text-primary); margin-bottom: 16px; }
+    .hero h1 em { background: linear-gradient(135deg, var(--pastel-saffron), var(--pastel-green)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-style: italic; }
+    .hero p { font-size: 16px; color: var(--text-secondary); font-style: italic; max-width: 480px; }
+
+    .agent-badges { display: flex; gap: 8px; margin-top: 24px; flex-wrap: wrap; }
+    .agent-badge { font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em; padding: 4px 12px; border: 1px solid var(--border); border-radius: 20px; color: var(--text-secondary); background: var(--bg-card); transition: all 0.3s; }
+    .agent-badge:hover { border-color: var(--pastel-saffron); color: var(--pastel-saffron); }
+
+    .section-label { font-family: var(--mono); font-size: 10px; letter-spacing: 0.3em; color: var(--pastel-saffron); margin-bottom: 16px; }
+    .crop-section, .analysis-section, .query-section { padding: 32px 0; border-bottom: 1px solid var(--border); }
+
+    .crop-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+    @media (max-width: 600px) { .crop-grid { grid-template-columns: repeat(2, 1fr); } }
+
+    .crop-btn {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--text-secondary);
+      padding: 20px 12px;
+      border-radius: 16px;
+      cursor: pointer;
+      transition: all 0.3s;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+    .crop-btn:hover { border-color: var(--pastel-saffron); background: rgba(255,179,71,0.1); transform: translateY(-2px); }
+    .crop-btn.active { border-color: var(--pastel-saffron); background: linear-gradient(135deg, rgba(255,179,71,0.2), rgba(168,230,207,0.1)); box-shadow: 0 0 20px var(--glow); }
+    .crop-icon { font-size: 28px; }
+    .crop-name { font-size: 14px; font-weight: 500; }
+    .crop-price { font-family: var(--mono); font-size: 10px; color: var(--pastel-green); }
+
+    .analysis-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+    @media (max-width: 600px) { .analysis-grid { grid-template-columns: repeat(2, 1fr); } }
+
+    .analysis-btn {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--text-secondary);
+      padding: 12px 14px;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-family: var(--mono);
+      font-size: 11px;
+      text-align: left;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .analysis-btn:hover { border-color: var(--pastel-saffron); background: rgba(255,179,71,0.1); }
+    .analysis-btn.active { border-color: var(--pastel-saffron); background: rgba(255,179,71,0.15); color: var(--pastel-saffron); }
+
+    textarea#queryInput {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--text-primary);
+      font-family: var(--serif);
+      font-size: 16px;
+      padding: 16px;
+      border-radius: 16px;
+      resize: vertical;
+      outline: none;
+      transition: all 0.3s;
+      width: 100%;
+    }
+    textarea#queryInput:focus { border-color: var(--pastel-saffron); box-shadow: 0 0 15px var(--glow); }
+    textarea#queryInput::placeholder { color: var(--text-secondary); font-style: italic; }
+
+    .ask-btn {
+      background: linear-gradient(135deg, var(--pastel-saffron), #ff9f2e);
+      border: none;
+      color: var(--bg-dark);
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: bold;
+      letter-spacing: 0.2em;
+      padding: 14px 32px;
+      border-radius: 40px;
+      cursor: pointer;
+      transition: all 0.3s;
+      margin-top: 16px;
+      float: right;
+    }
+    .ask-btn:hover { transform: scale(1.02); box-shadow: 0 0 25px var(--glow); }
+    .ask-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    .pipeline-section { padding: 32px 0; border-bottom: 1px solid var(--border); display: none; }
+    .pipeline-steps { display: flex; flex-direction: column; gap: 12px; }
+
+    .pipeline-step {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 16px;
+      background: var(--bg-card);
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      opacity: 0.4;
+      transition: all 0.4s;
+    }
+    .pipeline-step.active { opacity: 1; border-color: var(--pastel-saffron); box-shadow: 0 0 15px var(--glow); }
+    .pipeline-step.done { opacity: 0.8; border-color: var(--pastel-green); }
+
+    .step-indicator {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: bold;
+    }
+    .pipeline-step.active .step-indicator { border-color: var(--pastel-saffron); color: var(--pastel-saffron); background: rgba(255,179,71,0.1); }
+    .pipeline-step.done .step-indicator { border-color: var(--pastel-green); color: var(--pastel-green); background: rgba(168,230,207,0.1); }
+
+    .step-content { flex: 1; }
+    .step-name { font-family: var(--mono); font-size: 11px; letter-spacing: 0.15em; color: var(--text-secondary); margin-bottom: 4px; }
+    .pipeline-step.active .step-name { color: var(--pastel-saffron); }
+    .step-desc { font-size: 12px; color: var(--text-secondary); }
+
+    .step-status { font-family: var(--mono); font-size: 10px; padding: 4px 10px; border-radius: 20px; background: var(--bg-elevated); }
+    .step-status.running { background: rgba(255,179,71,0.2); color: var(--pastel-saffron); }
+    .step-status.done { background: rgba(168,230,207,0.2); color: var(--pastel-green); }
+
+    .result-section { padding: 32px 0; display: none; }
+    .result-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; flex-wrap: wrap; gap: 12px; }
+    .result-label { font-family: var(--mono); font-size: 10px; letter-spacing: 0.3em; color: var(--pastel-saffron); }
+
+    .confidence-badge, .guardrail-badge { font-family: var(--mono); font-size: 10px; padding: 4px 12px; border-radius: 20px; }
+    .confidence-high { background: rgba(168,230,207,0.2); color: var(--pastel-green); border: 1px solid var(--pastel-green); }
+    .confidence-med { background: rgba(255,179,71,0.2); color: var(--pastel-saffron); border: 1px solid var(--pastel-saffron); }
+    .confidence-low { background: rgba(255,100,100,0.2); color: #ff6b6b; border: 1px solid #ff6b6b; }
+    .guardrail-ok { background: rgba(168,230,207,0.2); color: var(--pastel-green); border: 1px solid var(--pastel-green); }
+    .guardrail-fail { background: rgba(255,100,100,0.2); color: #ff6b6b; border: 1px solid #ff6b6b; }
+
+    .result-body { background: var(--bg-card); border: 1px solid var(--border); border-radius: 20px; padding: 24px; font-size: 16px; line-height: 1.8; color: var(--text-primary); margin-bottom: 20px; }
+
+    .risk-flags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+    .risk-flag { font-family: var(--mono); font-size: 10px; padding: 4px 12px; border-radius: 20px; background: rgba(255,179,71,0.15); color: var(--pastel-saffron); border: 1px solid rgba(255,179,71,0.3); }
+
+    .financial-panel { background: var(--bg-card); border: 1px solid var(--border); border-radius: 20px; overflow: hidden; margin-top: 20px; }
+    .financial-header { padding: 12px 20px; border-bottom: 1px solid var(--border); font-family: var(--mono); font-size: 10px; letter-spacing: 0.3em; color: var(--pastel-green); }
+    .financial-grid { display: grid; grid-template-columns: 1fr 1fr; }
+    .financial-cell { padding: 16px 20px; border-bottom: 1px solid var(--border); border-right: 1px solid var(--border); }
+    .fin-label { font-family: var(--mono); font-size: 9px; letter-spacing: 0.2em; color: var(--text-secondary); margin-bottom: 6px; }
+    .fin-value { font-size: 14px; color: var(--pastel-saffron); font-weight: 500; }
+
+    .audit-toggle { font-family: var(--mono); font-size: 10px; letter-spacing: 0.2em; color: var(--text-secondary); background: var(--bg-card); border: 1px solid var(--border); padding: 10px 20px; cursor: pointer; border-radius: 30px; transition: all 0.3s; margin: 20px 0; }
+    .audit-toggle:hover { border-color: var(--pastel-saffron); color: var(--pastel-saffron); }
+
+    .audit-trail { display: none; gap: 12px; flex-direction: column; }
+    .audit-trail.open { display: flex; }
+
+    .audit-card { background: var(--bg-elevated); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; }
+    .audit-card-header { padding: 12px 16px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; }
+    .audit-agent-name { font-family: var(--mono); font-size: 10px; letter-spacing: 0.2em; color: var(--pastel-saffron); }
+    .audit-agent-role { font-family: var(--mono); font-size: 10px; color: var(--text-secondary); }
+    .audit-card-body { padding: 16px; font-family: var(--mono); font-size: 11px; color: var(--text-secondary); }
+
+    footer { padding: 32px 0; border-top: 1px solid var(--border); margin-top: 48px; display: flex; justify-content: space-between; align-items: center; font-family: var(--mono); font-size: 10px; color: var(--text-secondary); }
+
+    .hidden { display: none !important; }
+    .dots::after { content: ''; animation: dots 1.4s steps(4, end) infinite; }
+    @keyframes dots { 0%{content:''} 25%{content:'.'} 50%{content:'..'} 75%{content:'...'} 100%{content:''} }
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="logo-block">
+      <span class="logo-main">ARVIS AGENT SYSTEM</span>
+      <div class="logo-title">Agricultural Intelligence</div>
+      <span class="logo-sub">Kashmir · Multi-Agent Advisory Platform</span>
+    </div>
+    <div class="context-bar">
+      <div class="district-select-wrap">
+        <span class="district-label">DISTRICT</span>
+        <select id="districtSelect">
+          <option value="Sopore">Sopore</option><option value="Srinagar">Srinagar</option><option value="Baramulla">Baramulla</option>
+          <option value="Pampore">Pampore</option><option value="Anantnag">Anantnag</option><option value="Pulwama">Pulwama</option>
+          <option value="Shopian">Shopian</option><option value="Kupwara">Kupwara</option><option value="Budgam">Budgam</option><option value="Ganderbal">Ganderbal</option>
+        </select>
+      </div>
+      <div class="weather-widget" id="weatherWidget"><span>fetching weather<span class="dots"></span></span></div>
+    </div>
+  </header>
+
+  <section class="hero">
+    <h1>Domain-specialized AI<br/><em>for Kashmir agriculture.</em></h1>
+    <p>A five-agent pipeline — intake, advisory, risk, financial intelligence, and guardrails — with full auditability of every decision.</p>
+    <div class="agent-badges">
+      <span class="agent-badge">INTAKE AGENT</span><span class="agent-badge">ADVISORY AGENT</span>
+      <span class="agent-badge">RISK AGENT</span><span class="agent-badge">FINANCIAL AGENT</span><span class="agent-badge">GUARDRAIL AGENT</span>
+    </div>
+  </section>
+
+  <section class="crop-section">
+    <p class="section-label">01 — SELECT CROP</p>
+    <div class="crop-grid">
+      <button class="crop-btn active" data-crop="saffron"><span class="crop-icon">🌸</span><span class="crop-name">Saffron</span><span class="crop-price">₹2.5L–3.5L/kg</span></button>
+      <button class="crop-btn" data-crop="rice"><span class="crop-icon">🌾</span><span class="crop-name">Rice</span><span class="crop-price">₹80–200/kg</span></button>
+      <button class="crop-btn" data-crop="apple"><span class="crop-icon">🍎</span><span class="crop-name">Apple</span><span class="crop-price">₹30–120/kg</span></button>
+      <button class="crop-btn" data-crop="walnut"><span class="crop-icon">🥜</span><span class="crop-name">Walnut</span><span class="crop-price">₹800–1500/kg</span></button>
+    </div>
+  </section>
+
+  <section class="analysis-section">
+    <p class="section-label">02 — ANALYSIS TYPE</p>
+    <div class="analysis-grid">
+      <button class="analysis-btn active" data-type="general">🌿 General Advice</button>
+      <button class="analysis-btn" data-type="fertilizer">🧪 Fertilizer Guide</button>
+      <button class="analysis-btn" data-type="pest_calendar">📅 Pest Calendar</button>
+      <button class="analysis-btn" data-type="harvest">🌾 Harvest Timing</button>
+      <button class="analysis-btn" data-type="prices">💰 Market Prices</button>
+      <button class="analysis-btn" data-type="recommendation">🧭 Crop Recommendation</button>
+    </div>
+  </section>
+
+  <section class="query-section">
+    <p class="section-label">03 — QUERY</p>
+    <div class="query-box">
+      <textarea id="queryInput" rows="4" placeholder="Describe the agronomic problem or financial question..."></textarea>
+      <button class="ask-btn" id="askBtn"><span id="askBtnText">RUN AGENT PIPELINE</span><span id="askBtnLoader" class="hidden">PROCESSING<span class="dots"></span></span></button>
+    </div>
+  </section>
+
+  <section class="pipeline-section" id="pipelineSection">
+    <p class="section-label">AGENT PIPELINE — LIVE</p>
+    <div class="pipeline-steps" id="pipelineSteps">
+      <div class="pipeline-step" id="step-intake"><div class="step-indicator">01</div><div class="step-content"><div class="step-name">INTAKE AGENT</div><div class="step-desc">Parsing query, identifying crop context and district conditions</div></div><div class="step-status pending" id="status-intake">WAITING</div></div>
+      <div class="pipeline-step" id="step-advisory"><div class="step-indicator">02</div><div class="step-content"><div class="step-name">ADVISORY AGENT</div><div class="step-desc">Generating domain-specific recommendation from Kashmir agricultural knowledge base</div></div><div class="step-status pending" id="status-advisory">WAITING</div></div>
+      <div class="pipeline-step" id="step-risk"><div class="step-indicator">03</div><div class="step-content"><div class="step-name">RISK AGENT</div><div class="step-desc">Assessing confidence, edge cases, and weather-related risk factors</div></div><div class="step-status pending" id="status-risk">WAITING</div></div>
+      <div class="pipeline-step" id="step-financial"><div class="step-indicator">04</div><div class="step-content"><div class="step-name">FINANCIAL AGENT</div><div class="step-desc">Computing profitability, market timing, and cost optimization</div></div><div class="step-status pending" id="status-financial">WAITING</div></div>
+      <div class="pipeline-step" id="step-guardrail"><div class="step-indicator">05</div><div class="step-content"><div class="step-name">GUARDRAIL AGENT</div><div class="step-desc">Validating output against compliance rules and domain safety constraints</div></div><div class="step-status pending" id="status-guardrail">WAITING</div></div>
+    </div>
+  </section>
+
+  <section class="result-section" id="resultSection">
+    <div class="result-header"><span class="result-label">FINAL RECOMMENDATION</span><div class="result-meta"><span class="confidence-badge" id="confidenceBadge"></span><span class="guardrail-badge" id="guardrailBadge"></span></div></div>
+    <div class="result-body" id="resultBody"></div>
+    <div class="risk-flags" id="riskFlags"></div>
+    <div class="financial-panel" id="financialPanel"><div class="financial-header">FINANCIAL INTELLIGENCE</div><div class="financial-grid" id="financialGrid"></div></div>
+    <button class="audit-toggle" id="auditToggle">VIEW AGENT AUDIT TRAIL ↓</button>
+    <div class="audit-trail" id="auditTrail"></div>
+  </section>
+
+  <footer><span>ARVIS · Agricultural Intelligence System · Kashmir</span><span>PS5 — Domain-Specialized AI · ET AI Hackathon 2026</span></footer>
+</div>
+
+<script>
+  let selectedCrop = "saffron", selectedAnalysis = "general", selectedDistrict = "Sopore", currentWeather = null;
+  const steps = ["intake", "advisory", "risk", "financial", "guardrail"];
+
+  async function loadWeather() {
+    try {
+      const res = await fetch(`/api/weather?district=${selectedDistrict}`);
+      const data = await res.json();
+      if (!data.error) { currentWeather = data; document.getElementById("weatherWidget").innerHTML = `<span>📍 ${data.city}</span><span class="weather-temp">${data.temp}°C</span><span>${data.description}</span><span>💧${data.humidity}%</span>`; }
+      else throw new Error();
+    } catch { document.getElementById("weatherWidget").innerHTML = `<span>weather unavailable</span>`; }
+  }
+
+  document.querySelectorAll(".crop-btn").forEach(btn => btn.addEventListener("click", () => { document.querySelectorAll(".crop-btn").forEach(b => b.classList.remove("active")); btn.classList.add("active"); selectedCrop = btn.dataset.crop; }));
+  document.querySelectorAll(".analysis-btn").forEach(btn => btn.addEventListener("click", () => { document.querySelectorAll(".analysis-btn").forEach(b => b.classList.remove("active")); btn.classList.add("active"); selectedAnalysis = btn.dataset.type; const fills = { pest_calendar: `Generate a full pest and disease calendar for ${selectedCrop}`, harvest: `When and how should I harvest ${selectedCrop} in Kashmir?`, prices: `What are current market prices for ${selectedCrop}?`, recommendation: `Which crop should I grow in ${selectedDistrict}?`, fertilizer: `What is optimal fertilizer regimen for ${selectedCrop}?` }; document.getElementById("queryInput").value = fills[selectedAnalysis] || ""; }));
+  document.getElementById("districtSelect").addEventListener("change", (e) => { selectedDistrict = e.target.value; loadWeather(); });
+
+  function resetPipeline() { steps.forEach((s,i) => { let el = document.getElementById(`step-${s}`), st = document.getElementById(`status-${s}`); el.classList.remove("active","done"); el.querySelector(".step-indicator").textContent = String(i+1).padStart(2,'0'); st.textContent = "WAITING"; st.className = "step-status pending"; }); }
+  function activateStep(s) { let el = document.getElementById(`step-${s}`), st = document.getElementById(`status-${s}`); el.classList.add("active"); st.textContent = "RUNNING"; st.className = "step-status running"; }
+  function completeStep(s) { let el = document.getElementById(`step-${s}`), st = document.getElementById(`status-${s}`); el.classList.remove("active"); el.classList.add("done"); el.querySelector(".step-indicator").textContent = "✓"; st.textContent = "DONE"; st.className = "step-status done"; }
+  function delay(ms) { return new Promise(r => setTimeout(r, ms)); }
+  async function runPipelineAnimation() { document.getElementById("pipelineSection").style.display = "block"; resetPipeline(); for(let i=0;i<steps.length;i++) { await delay(i*600); activateStep(steps[i]); await delay(400); } }
+
+  function renderAuditTrail(d) { if(!d) return; let trail = document.getElementById("auditTrail"); trail.innerHTML = ""; 
+    let agents = [{name:"INTAKE AGENT",role:"Query Parser",data:d.intake},{name:"ADVISORY AGENT",role:"Domain Knowledge",data:d.advisory},{name:"RISK AGENT",role:"Confidence & Edge Cases",data:d.risk},{name:"FINANCIAL AGENT",role:"Profitability",data:d.financial},{name:"GUARDRAIL AGENT",role:"Compliance",data:d.guardrail}];
+    agents.forEach(a => { if(a.data) { let card = document.createElement("div"); card.className = "audit-card"; let fields = ""; Object.entries(a.data).forEach(([k,v]) => { if(v && typeof v !== "object") fields += `<div><span class="audit-key">${k}:</span> ${v}</div>`; else if(Array.isArray(v) && v.length) fields += `<div><span class="audit-key">${k}:</span> ${v.join(", ")}</div>`; }); card.innerHTML = `<div class="audit-card-header"><span class="audit-agent-name">${a.name}</span><span class="audit-agent-role">${a.role}</span></div><div class="audit-card-body">${fields || "No data"}</div>`; trail.appendChild(card); } }); }
+  function renderFinancial(f) { if(!f) return; let grid = document.getElementById("financialGrid"); grid.innerHTML = `<div class="financial-cell"><div class="fin-label">PROFITABILITY</div><div class="fin-value">${f.profitabilityAnalysis || "N/A"}</div></div><div class="financial-cell"><div class="fin-label">RETURN PER KANAL</div><div class="fin-value">${f.estimatedReturnPerKanal || "N/A"}</div></div><div class="financial-cell"><div class="fin-label">MARKET TIMING</div><div class="fin-value">${f.marketTiming || "N/A"}</div></div><div class="financial-cell"><div class="fin-label">COST OPTIMIZATION</div><div class="fin-value">${f.costOptimization || "N/A"}</div></div>`; }
+
+  document.getElementById("askBtn").addEventListener("click", async () => {
+    let query = document.getElementById("queryInput").value.trim();
+    if(!query) { alert("Please enter a query."); return; }
+    document.getElementById("askBtnText").classList.add("hidden"); document.getElementById("askBtnLoader").classList.remove("hidden"); document.getElementById("askBtn").disabled = true;
+    document.getElementById("resultSection").style.display = "none"; document.getElementById("auditTrail").classList.remove("open");
+    let start = Date.now(); runPipelineAnimation();
+    try {
+      let res = await fetch("/api/gemini/analyze", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ crop: selectedCrop, query, language: "english", weather: currentWeather, analysisType: selectedAnalysis, district: selectedDistrict }) });
+      let data = await res.json();
+      if(data.error) throw new Error(data.error);
+      let elapsed = Date.now() - start; await delay(Math.max(0, 4000 - elapsed));
+      steps.forEach(s => completeStep(s));
+      document.getElementById("resultBody").innerHTML = data.result || "Analysis complete.";
+      let score = data.agentData?.risk?.confidenceScore || 0;
+      let cb = document.getElementById("confidenceBadge"); cb.textContent = `CONFIDENCE ${score}%`; cb.className = "confidence-badge " + (score >= 75 ? "confidence-high" : score >= 50 ? "confidence-med" : "confidence-low");
+      let passed = data.agentData?.guardrail?.passed !== false;
+      let gb = document.getElementById("guardrailBadge"); gb.textContent = passed ? "✓ GUARDRAILS PASSED" : "⚠ GUARDRAIL VIOLATION"; gb.className = "guardrail-badge " + (passed ? "guardrail-ok" : "guardrail-fail");
+      let flags = [...(data.agentData?.risk?.riskFlags||[]), ...(data.agentData?.risk?.edgeCases||[])];
+      document.getElementById("riskFlags").innerHTML = flags.map(f => `<span class="risk-flag">⚠ ${f}</span>`).join("");
+      renderFinancial(data.agentData?.financial); renderAuditTrail(data.agentData);
+      document.getElementById("resultSection").style.display = "block"; document.getElementById("resultSection").scrollIntoView({ behavior: "smooth" });
+    } catch(err) { steps.forEach(s => completeStep(s)); alert("Error: " + err.message); }
+    finally { document.getElementById("askBtnText").classList.remove("hidden"); document.getElementById("askBtnLoader").classList.add("hidden"); document.getElementById("askBtn").disabled = false; }
+  });
+  document.getElementById("auditToggle").addEventListener("click", () => { let t=document.getElementById("auditTrail"); t.classList.toggle("open"); document.getElementById("auditToggle").textContent = t.classList.contains("open") ? "HIDE AGENT AUDIT TRAIL ↑" : "VIEW AGENT AUDIT TRAIL ↓"; });
+  loadWeather();
+</script>
+</body>
+</html>
