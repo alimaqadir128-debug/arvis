@@ -1,64 +1,45 @@
-\# 🌾 Arvis — Agricultural Intelligence System
+🌾 Arvis — Agricultural Intelligence System
 
 
 > Domain-specialized AI for Kashmir agriculture | 5-Agent Pipeline with Full Auditability
 
 
-\---
 
 
 
-\## 📌 Project Overview
+
+📌 Project Overview
 
 
 
-\*\*Arvis\*\* is an AI-powered agricultural advisory system designed specifically for Kashmir Valley farmers. It uses a 5-agent pipeline to provide domain-specific recommendations while maintaining complete auditability of every decision.
+Arvis is an AI-powered agricultural advisory system designed specifically for Kashmir Valley farmers. It uses a 5-agent pipeline to provide domain-specific recommendations while maintaining complete auditability of every decision.
 
 
 
-\### Problem Statement
+ Problem Statement
 
 Kashmir farmers face unique challenges: unpredictable weather, pest outbreaks, market price fluctuations, and lack of timely expert advice. Traditional agricultural extension services cannot reach every farmer when needed.
 
 
 
-\### Solution
+ Solution
 
 Arvis delivers instant, personalized agricultural advice through an intelligent multi-agent system that:
 
-\- Analyzes crop-specific requirements
+Analyzes crop-specific requirements
 
-\- Assesses weather and seasonal risks
+Assesses weather and seasonal risks
 
-\- Provides financial intelligence
+Provides financial intelligence
 
-\- Ensures compliance with safety guidelines
-
-
-
-\---
+Ensures compliance with safety guidelines
 
 
 
-\## 👩‍💻 Author
 
 
 
-\*\*Alima Qadir\*\*  
-
-2nd Semester CSE Student  
-
-SSM College of Engineering  
-
-ET AI Hackathon 2026
-
-
-
-\---
-
-
-
-\## 🧠 5-Agent Pipeline
+🧠 5-Agent Pipeline
 
 ┌─────────────┐ ┌─────────────┐ ┌─────────────┐ ┌─────────────┐ ┌─────────────┐
 
@@ -73,7 +54,6 @@ ET AI Hackathon 2026
 Parses Generates Assesses Computes Validates
 
 Query Advice Risks Profitability Compliance
-
 
 
 
@@ -94,37 +74,34 @@ Query Advice Risks Profitability Compliance
 
 
 
-\---
+
+ 🎨 Features
 
 
 
-\## 🎨 Features
+Dark + Pastel UI — Elegant, modern, and easy on the eyes
+
+Real-time Pipeline Animation — Visual feedback for each agent
+
+Crop Selection — Saffron, Rice, Apple, Walnut
+
+6 Analysis Types - General Advice, Fertilizer Guide, Pest Calendar, Harvest Timing, Market Prices, Crop Recommendation
+
+Weather Integration — Real-time weather for all Kashmir districts
+
+Financial Intelligence — Profitability analysis, market timing, cost optimization
+
+Audit Trail— Complete decision log for transparency
+
+Guardrail Compliance— Safety disclaimers and prohibited content filtering
 
 
 
-\-  \*\*Dark + Pastel UI\*\* — Elegant, modern, and easy on the eyes
-
-\-  \*\*Real-time Pipeline Animation\*\* — Visual feedback for each agent
-
-\-  \*\*Crop Selection\*\* — Saffron, Rice, Apple, Walnut
-
-\-  \*\*6 Analysis Types\*\* — General Advice, Fertilizer Guide, Pest Calendar, Harvest Timing, Market Prices, Crop Recommendation
-
-\-  \*\*Weather Integration\*\* — Real-time weather for all Kashmir districts
-
-\-  \*\*Financial Intelligence\*\* — Profitability analysis, market timing, cost optimization
-
-\-  \*\*Audit Trail\*\* — Complete decision log for transparency
-
-\-  \*\*Guardrail Compliance\*\* — Safety disclaimers and prohibited content filtering
 
 
 
-\---
 
-
-
-\## 🛠️ Tech Stack
+ 🛠️ Tech Stack
 
 
 
@@ -142,11 +119,11 @@ Query Advice Risks Profitability Compliance
 
 
 
-\---
 
 
 
-\## 📁 Project Structure
+
+📁 Project Structure
 
 arvis/
 ├── public/
@@ -164,7 +141,7 @@ arvis/
 └── README.md # 
 
 
----
+
 
 ## 🚀 Getting Started
 
@@ -180,27 +157,39 @@ git clone https://github.com/alimaqadir128-debug/arvis.git
 cd Arvis
 
 2. Install dependencies
-
+```bash
 npm install
 
 3.Start the server
-
+```bash
 npm start
 
 4.Open in browser
-
 http://localhost:3000
+
+
+
+
+## How to Add This File
+
+1. **Create the README file**
+```bash
+notepad README.md
+
+
+
+
 
 📊 How to Use
 Select a Crop — Choose from Saffron, Rice, Apple, or Walnut
-
 Choose Analysis Type — General Advice, Fertilizer Guide, Pest Calendar, etc.
-
 Enter Your Query — Describe your agricultural problem
-
 Click "RUN AGENT PIPELINE" — Watch the 5 agents process your request
-
 Review Results — View recommendation, risk flags, financial analysis, and audit trail
+
+
+
+
 
 📈 Impact Metrics
 Metric	Value
@@ -211,15 +200,30 @@ Cost Savings	₹12,000/acre/year
 Total Economic Impact	₹210 Crore/year
 Detailed impact model available in IMPACT.md
 
+
+
+
+
+
 🔍 Audit Trail
 Every decision is logged with:
-
 Timestamp
 Agent name
 Input parameters
 Output decisions
 Guardrail status
 This ensures complete transparency and accountability for all recommendations.
+
+
+
+
+
+📄 License
+This project is created for the ET AI Hackathon 2026.
+
+
+
+
 
 🏆 Hackathon Submission
 This project was built for ET AI Hackathon 2026
@@ -230,21 +234,14 @@ Alima Qadir
 SSM College of Engineering
 GitHub: @alimaqadir128-debug
 
-📄 License
-This project is created for the ET AI Hackathon 2026.
+
 
 
 Arvis — From Latin "arvum" meaning field — your intelligent companion for Kashmir agriculture.
 
 
 
----
 
-## How to Add This File
-
-1. **Create the README file**
-```bash
-notepad README.md
 
 
 
